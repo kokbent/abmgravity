@@ -1,0 +1,3 @@
+useDynLib(abmgravity, .registration=TRUE)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)
