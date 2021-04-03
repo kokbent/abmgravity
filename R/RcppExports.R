@@ -5,6 +5,10 @@ build_network <- function(locs, weights, num_loc_candidate, seed, min_x = -87.78
     .Call(`_abmgravity_build_network`, locs, weights, num_loc_candidate, seed, min_x, min_y, steps)
 }
 
+build_network_wcomp <- function(locs, weights, compliance, num_loc_candidate, seed, min_x = -87.78555, min_y = 24.46990, steps = 2L) {
+    .Call(`_abmgravity_build_network_wcomp`, locs, weights, compliance, num_loc_candidate, seed, min_x, min_y, steps)
+}
+
 assign_by_gravity <- function(pts, locs, weights, num_loc, seed, min_x = -87.78555, min_y = 24.46990, steps = 2L, use_capacity = FALSE) {
     .Call(`_abmgravity_assign_by_gravity`, pts, locs, weights, num_loc, seed, min_x, min_y, steps, use_capacity)
 }

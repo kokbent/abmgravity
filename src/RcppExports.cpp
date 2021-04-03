@@ -22,6 +22,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// build_network_wcomp
+NumericMatrix build_network_wcomp(NumericMatrix locs, NumericVector weights, NumericVector compliance, int num_loc_candidate, unsigned int seed, double min_x, double min_y, int steps);
+RcppExport SEXP _abmgravity_build_network_wcomp(SEXP locsSEXP, SEXP weightsSEXP, SEXP complianceSEXP, SEXP num_loc_candidateSEXP, SEXP seedSEXP, SEXP min_xSEXP, SEXP min_ySEXP, SEXP stepsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type locs(locsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type compliance(complianceSEXP);
+    Rcpp::traits::input_parameter< int >::type num_loc_candidate(num_loc_candidateSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< double >::type min_x(min_xSEXP);
+    Rcpp::traits::input_parameter< double >::type min_y(min_ySEXP);
+    Rcpp::traits::input_parameter< int >::type steps(stepsSEXP);
+    rcpp_result_gen = Rcpp::wrap(build_network_wcomp(locs, weights, compliance, num_loc_candidate, seed, min_x, min_y, steps));
+    return rcpp_result_gen;
+END_RCPP
+}
 // assign_by_gravity
 NumericMatrix assign_by_gravity(NumericMatrix pts, NumericMatrix locs, NumericVector weights, int num_loc, unsigned int seed, double min_x, double min_y, int steps, bool use_capacity);
 RcppExport SEXP _abmgravity_assign_by_gravity(SEXP ptsSEXP, SEXP locsSEXP, SEXP weightsSEXP, SEXP num_locSEXP, SEXP seedSEXP, SEXP min_xSEXP, SEXP min_ySEXP, SEXP stepsSEXP, SEXP use_capacitySEXP) {
@@ -65,6 +83,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_abmgravity_build_network", (DL_FUNC) &_abmgravity_build_network, 7},
+    {"_abmgravity_build_network_wcomp", (DL_FUNC) &_abmgravity_build_network_wcomp, 8},
     {"_abmgravity_assign_by_gravity", (DL_FUNC) &_abmgravity_assign_by_gravity, 9},
     {"_abmgravity_assign_by_gravity2", (DL_FUNC) &_abmgravity_assign_by_gravity2, 11},
     {NULL, NULL, 0}
