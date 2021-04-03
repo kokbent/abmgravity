@@ -1,10 +1,10 @@
 Package: abmgravity
 Type: Package
-Title: What the Package Does in One 'Title Case' Line
-Version: 1.0
-Date: 2020-08-26
-Author: Your Name
-Maintainer: Your Name <your@email.com>
+Title: Functions to use gravity model to assign connections or interactions in an agent-based model
+Version: 1.1
+Date: 2021-04-03
+Author: Ben Toh
+Maintainer: Ben Toh <kokbent@ufl.edu>
 Description: One paragraph description of what the package does as one or more full
           sentences.
 License: GPL (>= 2)
