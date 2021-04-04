@@ -7,6 +7,20 @@ struct EdgeType {
   int id2;
 };
 
+//' Build network among a set of locations
+//' 
+//' @param locs A matrix of two columns containing xy-coordinates of locations.
+//' @param weights A vector of expected number of edges for each location.
+//' @param num_loc_candidate (Approximate) Number of nearest locations to establish edges with.
+//' @param seed Random number seed.
+//' @param min_x Smallest x value (helps with grid calculation)
+//' @param min_x Smallest y value (helps with grid calculation)
+//' @param steps Step size when doing neighbourhood searching
+//' @return A matrix of two columns containing the edges: row id of location 1 and location 2.
+//' @examples
+//' locs <- matrix(c(-87.45, -87.0, -87.4, -87.5, -87.1, -87.1, 
+//'                   24.8,   24.9,  25.1,  25.0,  24.85, 25.05), 6, 2)
+//' build_network(locs, rep(2, 6), 3, 4326)
 // [[Rcpp::export]]
 NumericMatrix build_network(NumericMatrix locs, NumericVector weights,
                             int num_loc_candidate, unsigned int seed, 
@@ -77,6 +91,17 @@ NumericMatrix build_network(NumericMatrix locs, NumericVector weights,
   return(out);
 }
 
+//' Build network among a set of locations with compliance score
+//' 
+//' @param locs A matrix of two columns containing xy-coordinates of locations.
+//' @param weights A vector of expected number of edges for each location.
+//' @param compliance A vector of compliance score
+//' @param num_loc_candidate (Approximate) Number of nearest locations to establish edges with.
+//' @param seed Random number seed.
+//' @param min_x Smallest x value (helps with grid calculation)
+//' @param min_x Smallest y value (helps with grid calculation)
+//' @param steps Step size when doing neighbourhood searching
+//' @return A matrix of two columns containing the edges: row id of location 1 and location 2.
 // [[Rcpp::export]]
 NumericMatrix build_network_wcomp(NumericMatrix locs, NumericVector weights,
                                   NumericVector compliance,
@@ -148,6 +173,19 @@ NumericMatrix build_network_wcomp(NumericMatrix locs, NumericVector weights,
   return(out);
 }
 
+//' Assigning ONE location to each point
+//' 
+//' @param pts A matrix of two columns containing xy-coordinates of points (e.g., person or house).
+//' @param locs A matrix of two columns containing xy-coordinates of locations (e.g., schools or workplaces).
+//' @param weights A vector of weights for each location (e.g., school or workplace size)
+//' @param num_loc (Approximate) Number of nearest locations to consider for assignment (to each point).
+//' @param seed Random number seed.
+//' @param min_x Smallest x value (helps with grid calculation)
+//' @param min_x Smallest y value (helps with grid calculation)
+//' @param steps Step size when doing neighbourhood searching (affects efficiency)
+//' @param use_capacity Logical indicating if the weights specified are to be interpreted as capacity; 
+//' If TRUE, each time a location is allocated to a point, the weight/capacity is reduced by one. Default is FALSE.
+//' @return A matrix of two columns containing specifying the assignment: row id of point and row id of location.
 // [[Rcpp::export]]
 NumericMatrix assign_by_gravity(NumericMatrix pts, NumericMatrix locs, NumericVector weights,
                                 int num_loc, unsigned int seed, 
@@ -193,6 +231,26 @@ NumericMatrix assign_by_gravity(NumericMatrix pts, NumericMatrix locs, NumericVe
   return(out);
 }
 
+//' Assigning one or more locations to each point
+//' 
+//' @param pts A matrix of two columns containing xy-coordinates of points (e.g., person or house).
+//' @param locs A matrix of two columns containing xy-coordinates of locations (e.g., schools or workplaces).
+//' @param weights A vector of weights for each location (e.g., school or workplace size)
+//' @param num_loc_choose Number of locations to be assigned to each point.
+//' @param num_loc_candidate (Approximate) Number of nearest locations to consider for assignment (to each point).
+//' @param seed Random number seed.
+//' @param min_x Smallest x value (helps with grid calculation)
+//' @param min_x Smallest y value (helps with grid calculation)
+//' @param steps Step size when doing neighbourhood searching (affects efficiency)
+//' @param use_capacity Logical indicating if the weights specified are to be interpreted as capacity; 
+//' If TRUE, each time a location is allocated to a point, the weight/capacity is reduced by one. Default is FALSE.
+//' @param replace Logical indicating if a location can be assigned to a point multiple times.
+//' @return A matrix of two columns containing specifying the assignment: row id of point and row id of location.
+//' @examples
+//' pts <- matrix(c(-87.45, -87.0, 24.85, 25.05), 2, 2)
+//' locs <- matrix(c(-87.4, -87.5, -87.1, -87.1,
+//'                   24.8,  24.9,  25.1,  25.0), 4, 2),
+//' assign_by_gravity2(pts, locs, c(1, 1, 1, 1), 2, 3, 4328)
 // [[Rcpp::export]]
 NumericMatrix assign_by_gravity2(NumericMatrix pts, NumericMatrix locs, NumericVector weights,
                                  int num_loc_choose, int num_loc_candidate, unsigned int seed, 
